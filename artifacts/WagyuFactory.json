@@ -1,5 +1,5 @@
 {
-  "contractName": "WagyuFactory",
+  "contractName": "DotDexFactory",
   "abi": [
     {
       "inputs": [
