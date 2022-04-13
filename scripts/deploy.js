@@ -70,6 +70,7 @@ async function main() {
 
   await sleep()
   await sleep()
+  await sleep()
 
   await adjustPeripherySourceCode(DotDexFactory)
 }

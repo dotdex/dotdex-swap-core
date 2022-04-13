@@ -20,7 +20,7 @@ function save(chainId, name, value) {
 async function createRealPool(address) {
   console.log('create LP pool ' + address)
   const signers = await ethers.getSigners()
-  const nonce = await ethers.provider.getTransactionCount(signers[0]._address)
+  // const nonce = await ethers.provider.getTransactionCount(signers[0]._address)
   const { chainId } = await ethers.provider.getNetwork()
   //const blockNumber = await ethers.provider.getBlockNumber();
   const data = get(chainId)
@@ -32,7 +32,8 @@ async function createRealPool(address) {
   if (tokenA == tokenB) throw 'token names should be different'
 
   const DotDexFactory = await ethers.getContractAt('DotDexFactory', data.DotDexFactory)
-  const PoolAddress = await DotDexFactory.createPair(tokenA, tokenB, { nonce, gasLimit: 9000000 })
+  // const PoolAddress = await DotDexFactory.createPair(tokenA, tokenB, { nonce, gasLimit: 9000000 })
+  const PoolAddress = await DotDexFactory.createPair(tokenA, tokenB, { gasLimit: 9000000 })
 
   const result = await PoolAddress.wait(1)
   const event = result.events.find(x => x.event == 'PairCreated')
@@ -41,7 +42,7 @@ async function createRealPool(address) {
 
   const symbol = await Token.symbol()
 
-  save(chainId, 'VLX_' + symbol + '_LP', { pair: event.args.pair, tokenA, tokenB })
+  save(chainId, 'GLMR_' + symbol + '_LP', { pair: event.args.pair, tokenA, tokenB })
 
   await sleep()
 
